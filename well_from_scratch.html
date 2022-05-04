@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+  <py-env>
+    - setuptools
+    - 'https://files.pythonhosted.org/packages/a3/f6/5e9fd182a0ab82bc76d2d1a3e8102db48325fc4dece54fb7848ca87272eb/lasio-0.29-py2.py3-none-any.whl'
+    - 'https://files.pythonhosted.org/packages/bf/5d/b1b7297c38c9fb1c9bbd9d00e30dad413b9951e2a62f9a49dc5dc1dfb4a2/welly-0.5.2-py3-none-any.whl'
+    - numpy
+  </py-env>
+  </head>
+  <body>
+    <p>Hello, this is a test page for LASIO</p>
+    <p>It may be helpful to watch what is happening in the browser's console. Right click and select inspector.</p>
+    <div id="altair" style="width: 100%; height: 100%"></div>
+    <py-script output="altair">
+
+
+
+<!-- from datetime import datetime
+now = datetime.now()
+now.strftime("%m/%d/%Y, %H:%M:%S") -->
+
+import lasio
+
+las = lasio.LASFile()
+
+from datetime import datetime
+
+las.well.DATE = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+las.params['ENG'] = lasio.HeaderItem('ENG', value='Kent Inverarity')
+las.params['LMF'] = lasio.HeaderItem('LMF', value='GL')
+las.other = 'Example of how to create a LAS file from scratch using lasio'
+
+<!-- We will invent some data for a curve: -->
+
+import numpy as np
+
+depths = np.arange(10, 50, 0.5)
+synth = np.log10(depths)*5+np.random.random(len(depths))
+synth[:8] = np.nan
+
+<!-- …add these to the LASFile object: -->
+
+las.add_curve('DEPT', depths, unit='m')
+las.add_curve('SYNTH', synth, descr='fake data')
+
+las.write('scratch_v1.2.las', version=1.2)
+las.write('scratch_v2.las', version=2)
+
+
+print("HEADER PRINTED FROM LASIO!!!!",las.header)
+
+<!-- NOW BRING IN WELLY -->
+
+
+
+import welly as welly
+from welly import Well, Project
+
+w = welly.las.from_lasio(las)
+<!-- gr = w.data['GR'] -->
+
+<!-- print("GAMMA RAY DATA FROM WELLY!!!!",gr) -->
+
+print(f"A: {w}")
+
+
+
+
+<!-- las = lasio.read("a00-01-01-073-05W5-0.LAS")
+
+well_test = las.keys
+
+print("well", well_test) -->
+
+<!-- import lasio.examples -->
+<!-- las = lasio.examples.open("1001178549.las") -->
+
+print("this is a test statement from Python that will print if no errors above")
+
+
+    </py-script>
+  </body>
+</html>
