@@ -3,12 +3,13 @@
     <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
   <py-env>
-    - setuptools
+    - pandas
+    - 'https://files.pythonhosted.org/packages/bf/5d/b1b7297c38c9fb1c9bbd9d00e30dad413b9951e2a62f9a49dc5dc1dfb4a2/welly-0.5.2-py3-none-any.whl'
     - 'https://files.pythonhosted.org/packages/a3/f6/5e9fd182a0ab82bc76d2d1a3e8102db48325fc4dece54fb7848ca87272eb/lasio-0.29-py2.py3-none-any.whl'
   </py-env>
   </head>
   <body>
-    <p>Hello, this is a test page for LASIO</p>
+    <p>Hello, this is a test page</p>
     <p>It may be helpful to watch what is happening in the browser's console. Right click and select inspector.</p>
     <div id="altair" style="width: 100%; height: 100%"></div>
     <py-script output="altair">
@@ -19,19 +20,25 @@
 now = datetime.now()
 now.strftime("%m/%d/%Y, %H:%M:%S") -->
 
-import lasio
+<!-- import lasio
+import lasio.examples
 
-las = lasio.read("a00-01-01-073-05W5-0.LAS")
-
-well_test = las.keys
-
+las = lasio.examples.open("1001178549.las")
+well_test = las.well
 print("well", well_test)
 
-<!-- import lasio.examples -->
-<!-- las = lasio.examples.open("1001178549.las") -->
+ -->
+
+import welly as welly
+from welly import Well, Project
+
+w = Well.from_las("00-01-01-073-05W5-0.LAS")  
+print(f"A: {w}")
+
+<!-- gr = w.data['GR']  # One log...
+gr.plot()          # ...with some superpowers! -->
 
 print("this is a test statement from Python that will print if no errors above")
-
 
     </py-script>
   </body>

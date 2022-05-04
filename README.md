@@ -3,6 +3,7 @@ Just a little playground to explore PyScript
 
 ## well.html
 <b>A test to see if I could get Welly or Lasio to run via Pyscript</b>
+Live at: https://justingosses.github.io/pyscript-playground/well.html use console to see print statements
 
 #### Current Bug
 Initial test didn't work, but think I know why. Welly uses Lasio to load LAS files. LASIO uses urllib/requests.py to load files.
