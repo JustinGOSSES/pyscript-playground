@@ -26,3 +26,12 @@ In this one, which is live at https://justingosses.github.io/pyscript-playground
 This avoids the problem of loading files and as  a result we can see both LASIO and WELLY work!. 
 
 All I do is print some text from the LAS, but it works.
+
+#### Welly and Lasio working with hardcoded string of a LAS well file
+https://justingosses.github.io/pyscript-playground/welly_hardCodedLasString_works.html
+
+This page shows a demo of Welly working successfully with a hard coded string version of a LAS file. 
+
+It even prints a figure, leveraging matplotlib, to the HTML page. 
+
+Next step will be to use Wellio.js and some JavaScript to build a user interface that lets users load LAS well files from arbitrary locations.
