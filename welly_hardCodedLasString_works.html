@@ -1,16 +1,28 @@
 <html>
   <head>
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"/> -->
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
   <py-env>
-    - setuptools
-    - 'https://files.pythonhosted.org/packages/a3/f6/5e9fd182a0ab82bc76d2d1a3e8102db48325fc4dece54fb7848ca87272eb/lasio-0.29-py2.py3-none-any.whl'
     - pandas
+    - 'https://files.pythonhosted.org/packages/bf/5d/b1b7297c38c9fb1c9bbd9d00e30dad413b9951e2a62f9a49dc5dc1dfb4a2/welly-0.5.2-py3-none-any.whl'
+    - 'https://files.pythonhosted.org/packages/a3/f6/5e9fd182a0ab82bc76d2d1a3e8102db48325fc4dece54fb7848ca87272eb/lasio-0.29-py2.py3-none-any.whl'
   </py-env>
   </head>
   <body>
-    <p>Hello, this is a test page for LASIO</p>
+    <h1>Hello, this is a test page that attemps to use <a href="https://github.com/pyscript/pyscript">PyScript</a> to run Welly entirely in the browser.</h1>
+    
+    <h2>Particulars of this page:</h2>
+    <p>This version loads a hard coded string version of a LAS prints some metadata about it and then a figure of the curves. 
+      Later versions will load LAS files from the website's front-end assets. 
+      Other versions will eventually let you load LAS files from arbitrary locations.</p>
+   
+  </br>
+    <i>Please note that is will take at least 10-60 seconds to load.</i>
     <p>It may be helpful to watch what is happening in the browser's console. Right click and select inspector.</p>
+    <p>You can find the code for this page in <a href="https://github.com/JustinGOSSES/pyscript-playground">this</a> repository </p>
+    <br>
+    <br>
+    <h3>OUTPUTS FROM PYTHON:</h3>
     <div id="altair" style="width: 100%; height: 100%"></div>
     <py-script output="altair">
 
@@ -19,6 +31,19 @@
 <!-- from datetime import datetime
 now = datetime.now()
 now.strftime("%m/%d/%Y, %H:%M:%S") -->
+
+<!-- import lasio
+import lasio.examples
+
+las = lasio.examples.open("1001178549.las")
+well_test = las.well
+print("well", well_test)
+
+ -->
+
+import welly as welly
+from welly import Well, Project
+
 
 hardcoded_LAS_string = """
 ~VERSION INFORMATION
@@ -1114,22 +1139,23 @@ SUFT.C        0                    : SUFT         - SURFACE TEMPERATURE
  650.000    0.036    0.166   64.622  266.581   10.576
  """
 
-import lasio
+w = welly.Well.from_las(hardcoded_LAS_string)  
+print(f"A: {w}")
 
-las = lasio.read(hardcoded_LAS_string)
+<!-- tracks = ['MD', 'CALI', 'GR', 'SP', 'RHOB', ['DT', 'DTS'], 'MD'] -->
 
-well_test = las.keys()
+fig1 = w.plot()
 
-print("well keys are:", well_test) 
-
-print("dataframe of well is:",las.df())
+print(fig1)
 
 
-<!-- import lasio.examples -->
-<!-- las = lasio.examples.open("1001178549.las") -->
+
+<!-- gr = w.data['GR']  # One log...
+gr.plot()          # ...with some superpowers! -->
 
 print("this is a test statement from Python that will print if no errors above")
 
+fig1
 
     </py-script>
   </body>
