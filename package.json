@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "wellio": "^0.1.13",
+    "wellioviz": "^0.0.33"
+  }
+}

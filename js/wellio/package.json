@@ -1,0 +1,63 @@
+{
+  "name": "wellio",
+  "version": "0.1.13",
+  "description": "Provides functionality to load a LAS 2.0 formatted well log file and convert it to a json file and then return different information about the well log",
+  "main": "dist/index.js",
+  "unpkg": "dist/index.js",
+  "scripts": {
+    "test": "tape dist/test/test*.js dist/test/read_las_json/test_*.js dist/test/las2json/test_*.js",
+    "test-lasload": "tape dist/test/test_lasload.js",
+    "test-las2json": "tape dist/test/las2json/test_*.js",
+    "test-read-lasio-json": "tape dist/test/read_las_json/test_*.js"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/test/test.js",
+    "dist/test/test.LAS",
+    "dist/test/test_lasload.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustinGOSSES/wellio.js.git"
+  },
+  "keywords": [
+    "LAS",
+    "LAS2.0",
+    "Well",
+    "Well-log",
+    "log",
+    "geology",
+    "stratigraphy",
+    "geoscience",
+    "IO",
+    "well",
+    "welllog",
+    "Log",
+    "geology",
+    "welly",
+    "lasio"
+  ],
+  "author": "Justin Gosses",
+  "license": "MIT",
+  "devDependencies": {
+    "ajv-cli": "^3.0.0",
+    "documentation": "^13.1.1",
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "tape": "~4.9.0"
+  },
+  "bugs": {
+    "url": "https://github.com/JustinGOSSES/wellio.js/issues"
+  },
+  "homepage": "https://github.com/JustinGOSSES/wellio.js#readme",
+  "dependencies": {
+    "browserslist": "^4.16.3",
+    "caniuse-lite": "^1.0.30001185"
+  }
+}
