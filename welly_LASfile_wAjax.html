@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"/> -->
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+  <py-env>
+    - pandas
+    - 'https://files.pythonhosted.org/packages/bf/5d/b1b7297c38c9fb1c9bbd9d00e30dad413b9951e2a62f9a49dc5dc1dfb4a2/welly-0.5.2-py3-none-any.whl'
+    - 'https://files.pythonhosted.org/packages/a3/f6/5e9fd182a0ab82bc76d2d1a3e8102db48325fc4dece54fb7848ca87272eb/lasio-0.29-py2.py3-none-any.whl'
+  </py-env>
+  </head>
+  <body>
+    <h1>Hello, this is a test page that attemps to use <a href="https://github.com/pyscript/pyscript">PyScript</a> to run Welly entirely in the browser.</h1>
+    
+    <h2>Particulars of this page:</h2>
+    <p>This version is (1) trying to use wellio.js to load a LAS format file (2) and then pass it to the python code using welly.py</p>
+    <h2>PROBLEMS:</h2>
+    <p>The main problem with this seems to be a conflict between the JavaScript code below calling wellio.js and the JavaScript that lets PyScript work.</p>
+    <p>Specifically, when REQUIRE is loaded for the wellio to work, it breaks the Python. Without it, the wellio.js code doesn't import.</p>
+    <p>At this point, it appears this conflict occurs because there are 'require' is being called twice. Once for wellio.js and work for PyScript.
+      Require creates a 'context' once called once, which then seems to be pre-existing by the time 'require' is called again. 
+      More details are described here:
+       <a href="https://stackoverflow.com/questions/27908244/requirejs-conflict-when-loading-twice-in-the-same-page">https://stackoverflow.com/questions/27908244/requirejs-conflict-when-loading-twice-in-the-same-page</a>.
+    </p>
+    <p>Possible one solution might be to integrate any JavaScript code into the Pyscript JavaScript context. 
+      This requires learning the internals of PyScript's JavaScript, which is unfortunately beyond my available time.
+    </p>
+  </br>
+    <i>Please note that is will take at least 10-60 seconds to load.</i>
+    <p>It may be helpful to watch what is happening in the browser's console. Right click and select inspector.</p>
+    <p>You can find the code for this page in <a href="https://github.com/JustinGOSSES/pyscript-playground">this</a> repository </p>
+    <br>
+    <br>
+    <h3>OUTPUTS FROM PYTHON:</h3>
+    <div id="altair" style="width: 100%; height: 100%"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/bundle.js"></script> -->
+    <script type="text/javascript">
+
+      let wellio = "w"
+      let path_to_well_file = "a00-01-01-073-05W5-0.LAS"
+
+      //// var all_files is a holder for the las files uploaded into the browser
+      var all_files = [""];
+      //// var temp_json is the single well las file converted to json object format
+      var temp_json = {};
+
+      function readInLASFromASSETS(path_to_well_file){
+          $.ajax({
+                    url : path_to_well_file,
+                    dataType: "text",
+                    success : function (data) {
+                      all_files = [data,""]
+                      // document.getElementById("upload-success").innerHTML = "upload success";
+                      console.log("successfully loaded a00-01-01-073-05W5-0.LAS",all_files)
+                    },
+                    error : function (XMLHttpRequest, textStatus, errorThrown) {
+                      // document.getElementById("upload-success").innerHTML = "upload failure";
+                      console.log("error in function readInLASFromASSETS() : ",textStatus, errorThrown)
+                    } 
+                });
+        }
+
+        readInLASFromASSETS(path_to_well_file)
+
+
+
+
+        function fileInput({
+            initialUrl, // e.g., "https://example.com/file.txt"
+            accept, // e.g., ".txt,.md"
+            load = value => value // A function to specify which value is exposed.
+          }) {
+            let file = null;
+            const form = html`<form>
+            ${Object.assign(html`<input name=url>`, {value: initialUrl})}
+            <button>Submit</button>
+            ${Object.assign(html`<input data-type=file name=file type=file>`, {accept})}
+          `;
+            form.onsubmit = event => {
+              form.value = load(form.url.value);
+              form.dispatchEvent(new CustomEvent("input"));
+              event.preventDefault();
+            };
+            form.url.oninput = event => {
+              event.stopPropagation();
+            };
+            form.file.oninput = () => {
+              if (file !== null) URL.revokeObjectURL(file);
+              file = URL.createObjectURL(form.file.files[0]);
+              form.value = load(form.url.value = file);
+            };
+            if (initialUrl !== undefined) {
+              form.value = load(initialUrl);
+            }
+            return form;
+}
+
+    </script>
+    <py-script output="altair">
+
+from js import all_files
+
+<!-- print("test to see if well string from javascript appears in Python =>",all_files[0]) -->
+
+import welly as welly
+from welly import Well, Project
+
+w = welly.Well.from_las(all_files[0])  
+
+print(f"A: {w}")
+
+<!-- tracks = ['MD', 'CALI', 'GR', 'SP', 'RHOB', ['DT', 'DTS'], 'MD'] -->
+
+fig1 = w.plot()
+
+print(fig1)
+
+print("this is a test statement from Python that will print if no errors above")
+
+def printWellLASFromStringFromJavaScript(well_string):
+    print("well_string from JavaScript:",well_string)
+
+fig1
+
+
+
+    </py-script>
+  </body>
+</html>

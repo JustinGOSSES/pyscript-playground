@@ -48,6 +48,10 @@ In fact, if you do nothing more to welly_hardCodedLasString_works.html except ad
     at loadInterpreter (interpreter.ts:418:5)
     at HTMLScriptElement.initializePyodide (App.svelte:16:31)`.
 
+#### (F) THIS ONE WORKS: welly_LASfile_wAjax.html
+
+Uses Ajax from jquery to do the loading from the LAS file here and it works fine.
+
 ## Status of This Work
 
 This is getting into the rats nest phase. No offense to rats. Might come back to it and maybe not.
