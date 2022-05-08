@@ -12,23 +12,11 @@
     <h1>Hello, this is a test page that attemps to use <a href="https://github.com/pyscript/pyscript">PyScript</a> to run Welly entirely in the browser.</h1>
     
     <h2>Particulars of this page:</h2>
-    <p>This version is (1) trying to use wellio.js to load a LAS format file (2) and then pass it to the python code using welly.py</p>
+    <p>This version is (1) trying to use Jquery's AJAX to load a LAS format file (2) and then pass it to the python code using welly.py</p>
     <h2>PROBLEMS:</h2>
-    <p>The main problem with this seems to be a conflict between the JavaScript code below calling wellio.js and the JavaScript that lets PyScript work.</p>
-    <p>Specifically, when REQUIRE is loaded for the wellio to work, it breaks the Python. Without it, the wellio.js code doesn't import.</p>
-    <p>At this point, it appears this conflict occurs because there are 'require' is being called twice. Once for wellio.js and work for PyScript.
-      Require creates a 'context' once called once, which then seems to be pre-existing by the time 'require' is called again. 
-      More details are described here:
-       <a href="https://stackoverflow.com/questions/27908244/requirejs-conflict-when-loading-twice-in-the-same-page">https://stackoverflow.com/questions/27908244/requirejs-conflict-when-loading-twice-in-the-same-page</a>.
+    <p>This version seems to work fine!
     </p>
-    <p>Possible one solution might be to integrate any JavaScript code into the Pyscript JavaScript context. 
-      This requires learning the internals of PyScript's JavaScript, which is unfortunately beyond my available time.
-    </p>
-  </br>
-    <i>Please note that is will take at least 10-60 seconds to load.</i>
-    <p>It may be helpful to watch what is happening in the browser's console. Right click and select inspector.</p>
-    <p>You can find the code for this page in <a href="https://github.com/JustinGOSSES/pyscript-playground">this</a> repository </p>
-    <br>
+   <br>
     <br>
     <h3>OUTPUTS FROM PYTHON:</h3>
     <div id="altair" style="width: 100%; height: 100%"></div>
